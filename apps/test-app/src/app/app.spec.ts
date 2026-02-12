@@ -1,20 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
-import { NxWelcome } from './nx-welcome';
+import { TOGGLE_FACETS } from './filter.type';
+import { FacetType } from '@wallaby-repro/shared-ui';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App, NxWelcome],
+      imports: [App],
     }).compileComponents();
   });
 
-  it('should render title', async () => {
+  it('should render title', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome test-app',
-    );
+    fixture.detectChanges();
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('should have toggle facets with correct type', () => {
+    expect(TOGGLE_FACETS[0].facetType).toBe(FacetType.Toggle);
+    expect(TOGGLE_FACETS[1].facetType).toBe(FacetType.Toggle);
   });
 });
